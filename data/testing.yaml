@@ -1,0 +1,26 @@
+---
+vision_intranet::mysql_root_password: 'foobar'
+vision_intranet::mysql_monitoring_password: 'foobar'
+vision_intranet::mysql_backup_password: 'foobar'
+
+vision_intranet::mysql_adressen_database: 'addr'
+vision_intranet::mysql_adressen_user: 'useradr'
+vision_intranet::mysql_adressen_password: 'foobar'
+
+vision_intranet::mysql_projekte_database: 'projekt'
+vision_intranet::mysql_projekte_user:  'userproj'
+vision_intranet::mysql_projekte_password: 'foobar'
+
+vision_intranet::mysql_voruntersuchungen_database: 'vor'
+vision_intranet::mysql_voruntersuchungen_user: 'uservor'
+vision_intranet::mysql_voruntersuchungen_password: 'foobar'
+
+vision_intranet::mysql_presse_database: 'presse'
+vision_intranet::mysql_presse_user: 'userpress'
+vision_intranet::mysql_presse_password: 'foobar'
+
+vision_intranet::mysql_intranet_database: 'intranet'
+vision_intranet::mysql_intranet_user: 'userint'
+vision_intranet::mysql_intranet_password: 'foobar'
+
+vision_intranet::phpmyadmin_server: 'foobar'
