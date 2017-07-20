@@ -4,9 +4,6 @@ fixtures:
         stdlib:
             ref: "4.12.0"
             repo: "https://github.com/puppetlabs/puppetlabs-stdlib"
-        beanstalkd:
-            ref: "9e7de99e671f716a44b1601b190cd82126faa2b7"
-            repo: "https://github.com/TomaszUrugOlszewski/beanstalkd.git"
         mysql:
           ref: "3.8.0"
           repo: "https://github.com/puppetlabs/puppetlabs-mysql"

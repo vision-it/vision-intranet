@@ -62,15 +62,29 @@ describe 'vision_intranet' do
     describe package('mysql-common') do
       it { is_expected.to be_installed }
     end
-    describe package('beanstalkd') do
-      it { is_expected.to be_installed }
-    end
   end
 
   context 'sql users' do
     describe command('mysql -e "select user,host from mysql.user"') do
       its(:exit_status) { is_expected.to eq 0 }
       its(:stdout) { is_expected.to match 'useradr' }
+    end
+  end
+
+  context 'beanstalkd provisioned' do
+    describe file('/var/lib/beanstalkd/') do
+      it { is_expected.to be_directory }
+    end
+    describe file('/etc/default/beanstalkd') do
+      it { is_expected.to be_file }
+      its(:content) { is_expected.to match 'Managed by Puppet' }
+      its(:content) { is_expected.to match '11300' }
+    end
+    describe package('beanstalkd') do
+      it { is_expected.to be_installed }
+    end
+    describe service('beanstalkd') do
+      it { is_expected.to be_enabled }
     end
   end
 end

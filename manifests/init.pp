@@ -42,8 +42,7 @@ class vision_intranet (
 
 ) {
 
-  contain ::beanstalkd
-
+  contain vision_intranet::beanstalk
   contain vision_intranet::docker
   contain vision_intranet::database
 
