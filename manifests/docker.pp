@@ -28,7 +28,7 @@ class vision_intranet::docker (
   }
 
   ::docker::run { 'intranet':
-    image   => 'vision.fraunhofer.de/intranet:lastest',
+    image   => 'vision.fraunhofer.de/intranet:latest',
     env     => [
       "DB_INTRANET_HOST=${::fqdn}",
       "DB_INTRANET_DATABASE=${mysql_intranet_database}",
