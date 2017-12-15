@@ -19,7 +19,8 @@ class vision_intranet (
   String $mysql_backup_password,
   String $mysql_intranet_database,
   String $mysql_intranet_user,
-  String $mysql_intranet_password
+  String $mysql_intranet_password,
+  Array  $docker_volumes = []
 
 ) {
 
