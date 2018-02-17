@@ -23,14 +23,20 @@ class vision_intranet::docker (
 
 ) {
 
+  if ($facts['intranet_tag'] == undef) {
+    $intranet_tag = 'latest'
+    } else {
+      $intranet_tag = $facts['intranet_tag']
+  }
+
   ::docker::image { 'intranet':
     ensure    => present,
     image     => 'vision.fraunhofer.de/intranet',
-    image_tag => 'latest',
+    image_tag => $intranet_tag,
   }
 
   ::docker::run { 'intranet':
-    image   => 'vision.fraunhofer.de/intranet:latest',
+    image   => "vision.fraunhofer.de/intranet:${intranet_tag}",
     env     => [
       "DB_INTRANET_HOST=${::fqdn}",
       "DB_INTRANET_DATABASE=${mysql_intranet_database}",

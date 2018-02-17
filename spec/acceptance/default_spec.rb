@@ -8,6 +8,9 @@ describe 'vision_intranet' do
         file { '/vision':
           ensure => directory,
         }
+        group { 'docker':
+          ensure => present,
+        }
 
         # Mocking
         class vision_intranet::docker () {}
