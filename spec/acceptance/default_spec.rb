@@ -47,21 +47,4 @@ describe 'vision_intranet' do
       it { is_expected.to be_installed }
     end
   end
-
-  context 'beanstalkd provisioned' do
-    describe file('/var/lib/beanstalkd/') do
-      it { is_expected.to be_directory }
-    end
-    describe file('/etc/default/beanstalkd') do
-      it { is_expected.to be_file }
-      its(:content) { is_expected.to match 'Managed by Puppet' }
-      its(:content) { is_expected.to match '11300' }
-    end
-    describe package('beanstalkd') do
-      it { is_expected.to be_installed }
-    end
-    describe service('beanstalkd') do
-      it { is_expected.to be_enabled }
-    end
-  end
 end
