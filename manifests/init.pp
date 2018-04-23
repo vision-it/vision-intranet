@@ -26,7 +26,6 @@ class vision_intranet (
 
   contain ::vision_docker
   contain ::vision_jenkins::user
-  contain vision_intranet::beanstalk
   contain vision_intranet::docker
   contain vision_intranet::database
 
