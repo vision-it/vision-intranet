@@ -13,7 +13,6 @@
 
 class vision_intranet (
 
-  String $phpmyadmin_server,
   String $mysql_root_password,
   String $mysql_monitoring_password,
   String $mysql_backup_password,

@@ -10,11 +10,7 @@ describe 'vision_intranet' do
 
       let :pre_condition do
         [
-          'class vision_docker() {}',
-          'class vision_mysql::server::phpmyadmin::client(
-            String $server,
-            String $role,
-           ) {}'
+          'class vision_docker() {}'
         ]
       end
 

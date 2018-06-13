@@ -15,10 +15,6 @@ describe 'vision_intranet' do
         # Mocking
         class vision_intranet::docker () {}
         class vision_docker () {}
-        class vision_mysql::server::phpmyadmin::client(
-            String $server,
-            String $role,
-        ) {}
 
         class { 'vision_intranet':
             mysql_root_password => 'foobar',
@@ -27,7 +23,6 @@ describe 'vision_intranet' do
             mysql_intranet_database => 'intranet',
             mysql_intranet_user => 'userint',
             mysql_intranet_password => 'foobar',
-            phpmyadmin_server => 'foobar.com',
         }
       FILE
 
