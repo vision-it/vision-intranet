@@ -23,28 +23,8 @@ class vision_intranet (
 
 ) {
 
-  contain ::vision_docker
-  contain ::vision_jenkins::user
-  contain vision_intranet::docker
+  contain vision_intranet::config
   contain vision_intranet::database
-
-  vision_shipit::inotify { 'intranet_tag':
-    group   => 'jenkins',
-    require => Class['::vision_jenkins::user'],
-  }
-
-  file {
-    [
-      '/opt/intranet',
-      '/opt/intranet/storage'
-    ]:
-    ensure => directory,
-    owner  => 'www-data',
-    group  => 'www-data',
-  }
-
-  Class['::vision_docker']
-  -> Class['::vision_intranet::database']
-  -> Class['::vision_intranet::docker']
+  contain vision_intranet::docker
 
 }

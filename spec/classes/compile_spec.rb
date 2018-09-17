@@ -8,14 +8,8 @@ describe 'vision_intranet' do
         facts.merge(root_home: '/root')
       end
 
-      let :pre_condition do
-        [
-          'class vision_docker() {}'
-        ]
-      end
-
       context 'compile' do
-        it { is_expected.to compile }
+        it { is_expected.to compile.with_all_deps }
       end
     end
   end

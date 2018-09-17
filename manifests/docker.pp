@@ -23,6 +23,8 @@ class vision_intranet::docker (
 
 ) {
 
+  contain ::vision_docker
+
   if ($facts['intranet_tag'] == undef) {
     $intranet_tag = 'latest'
     } else {
@@ -33,6 +35,7 @@ class vision_intranet::docker (
     ensure    => present,
     image     => 'vision.fraunhofer.de/intranet',
     image_tag => $intranet_tag,
+    require   => Class['vision_docker']
   }
 
   ::docker::run { 'intranet':
