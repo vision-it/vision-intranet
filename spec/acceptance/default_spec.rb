@@ -34,6 +34,18 @@ describe 'vision_intranet' do
   context 'files provisioned' do
     describe file('/opt/intranet/storage') do
       it { is_expected.to be_directory }
+      it { is_expected.to be_owned_by 'www-data' }
+    end
+  end
+
+  context 'Jenkins user and service' do
+    describe user('jenkins') do
+      it { is_expected.to exist }
+      it { is_expected.to have_uid 50_000 }
+    end
+
+    describe file('/etc/systemd/system/intranet_tag.service') do
+      it { is_expected.to be_file }
     end
   end
 
