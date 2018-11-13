@@ -28,7 +28,7 @@ class vision_intranet::database (
       password => $mysql_monitoring_password,
     },
     backup        => {
-      databases => ['intranet', 'adressen'],
+      databases => [$mysql_intranet_database],
       password  => $mysql_backup_password,
     }
   }
