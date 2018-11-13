@@ -32,4 +32,11 @@ class vision_intranet::config (
     group  => 'www-data',
   }
 
+  file { '/usr/local/sbin/sync-intranet.sh':
+    ensure  => present,
+    owner   => 'root',
+    mode    => '0750',
+    content => template('vision_intranet/sync-intranet.sh.erb'),
+  }
+
 }

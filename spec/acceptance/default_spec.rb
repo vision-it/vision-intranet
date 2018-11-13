@@ -36,6 +36,14 @@ describe 'vision_intranet' do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'www-data' }
     end
+
+    describe file('/usr/local/sbin/sync-intranet.sh') do
+      it { is_expected.to be_file }
+      it { is_expected.to be_owned_by 'root' }
+      it { is_expected.to be_mode 750 }
+      its(:content) { is_expected.to match 'intranet' }
+      its(:content) { is_expected.to match 'rsync' }
+    end
   end
 
   context 'Jenkins user and service' do

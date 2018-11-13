@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+
+HOST=intranet
+
+echo "Syncing latest data from intranet..."
+rsync \
+    --update \
+    --append-verify \
+    --delete \
+    --archive \
+    --exclude='*/storage/logs/*' \
+    --exclude='*/storage/sessions/*' \
+    "$HOST:/opt/intranet" "/opt"
+echo "OK"
+# TODO: validate if dirs are present
+
+echo "Fetching and importing latest dump of DB 'intranet'..."
+ssh $HOST 'cat $(ls -t /vision/db-backup/mysql_backup_intranet_*.sql.bz2 | head -n1)' | bzcat --decompress --stdout | mysql intranet
+echo "OK"
+
