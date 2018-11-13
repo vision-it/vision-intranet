@@ -20,6 +20,7 @@ class vision_intranet::docker (
   String $mysql_intranet_user       = $vision_intranet::mysql_intranet_user,
   String $mysql_intranet_password   = $vision_intranet::mysql_intranet_password,
   Array  $docker_volumes            = $vision_intranet::docker_volumes,
+  Integer $port                     = $vision_intranet::port,
 
 ) {
 
@@ -46,7 +47,7 @@ class vision_intranet::docker (
       "DB_INTRANET_USERNAME=${mysql_intranet_user}",
       "DB_INTRANET_PASSWORD=${mysql_intranet_password}",
     ],
-    ports   => [ '80:80' ],
+    ports   => [ "${port}:80" ],
     volumes => $docker_volumes
   }
 
