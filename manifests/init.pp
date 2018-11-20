@@ -19,7 +19,6 @@ class vision_intranet (
   Array  $docker_volumes = [],
   Integer $port = 80,
   Optional[String] $mysql_root_password,
-  Optional[String] $mysql_monitoring_password,
   Optional[String] $mysql_backup_password,
 
 ) {
