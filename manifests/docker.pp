@@ -14,8 +14,6 @@
 class vision_intranet::docker (
 
   String $mysql_root_password       = $vision_intranet::mysql_root_password,
-  String $mysql_monitoring_password = $vision_intranet::mysql_monitoring_password,
-  String $mysql_backup_password     = $vision_intranet::mysql_backup_password,
   String $mysql_intranet_database   = $vision_intranet::mysql_intranet_database,
   String $mysql_intranet_user       = $vision_intranet::mysql_intranet_user,
   String $mysql_intranet_password   = $vision_intranet::mysql_intranet_password,
