@@ -23,11 +23,18 @@ class vision_intranet::database (
 ) {
 
   if !defined(Class['::vision_mysql::server']) {
-    class { '::vision_mysql::server':
-      root_password => $mysql_root_password,
-      backup        => {
-        databases => [$mysql_intranet_database],
-        password  => $mysql_backup_password,
+    # no backups in staging environment
+    if $::applicationtier == 'staging' {
+      class { '::vision_mysql::server':
+        root_password => $mysql_root_password,
+      }
+    } else {
+      class { '::vision_mysql::server':
+        root_password => $mysql_root_password,
+        backup        => {
+          databases => [$mysql_intranet_database],
+          password  => $mysql_backup_password,
+        }
       }
     }
   }
