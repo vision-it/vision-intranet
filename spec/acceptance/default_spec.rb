@@ -18,7 +18,6 @@ describe 'vision_intranet' do
 
         class { 'vision_intranet':
             mysql_root_password => 'foobar',
-            mysql_monitoring_password => 'foobar',
             mysql_backup_password => 'foobar',
             mysql_intranet_database => 'intranet',
             mysql_intranet_user => 'userint',
