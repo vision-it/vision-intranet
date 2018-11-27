@@ -17,7 +17,7 @@ class vision_intranet::database (
   String $mysql_intranet_database = $vision_intranet::mysql_intranet_database,
   String $mysql_intranet_password = $vision_intranet::mysql_intranet_password,
   String $mysql_intranet_user = $vision_intranet::mysql_intranet_user,
-  Optional[String] $mysql_root_password = $vision_intranet::mysql_root_password,
+  String $mysql_root_password = $vision_intranet::mysql_root_password,
   Optional[String] $mysql_backup_password = $vision_intranet::mysql_backup_password,
 
 ) {
