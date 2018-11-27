@@ -16,13 +16,7 @@ describe 'vision_intranet' do
         class vision_intranet::docker () {}
         class vision_docker () {}
 
-        class { 'vision_intranet':
-            mysql_root_password => 'foobar',
-            mysql_backup_password => 'foobar',
-            mysql_intranet_database => 'intranet',
-            mysql_intranet_user => 'userint',
-            mysql_intranet_password => 'foobar',
-        }
+        class { 'vision_intranet': }
       FILE
 
       apply_manifest(pp, catch_failures: true)

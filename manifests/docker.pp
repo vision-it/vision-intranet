@@ -16,7 +16,8 @@ class vision_intranet::docker (
   String $mysql_intranet_database   = $vision_intranet::mysql_intranet_database,
   String $mysql_intranet_user       = $vision_intranet::mysql_intranet_user,
   String $mysql_intranet_password   = $vision_intranet::mysql_intranet_password,
-  Array  $docker_volumes            = $vision_intranet::docker_volumes,
+  Array[String] $docker_volumes     = $vision_intranet::docker_volumes,
+  Array[String] $environment        = $vision_intranet::environment,
   Integer $port                     = $vision_intranet::port,
 
 ) {
@@ -36,14 +37,16 @@ class vision_intranet::docker (
     require   => Class['vision_docker']
   }
 
-  ::docker::run { 'intranet':
-    image   => "vision.fraunhofer.de/intranet:${intranet_tag}",
-    env     => [
+  $docker_environment = concat([
       "DB_INTRANET_HOST=${::fqdn}",
       "DB_INTRANET_DATABASE=${mysql_intranet_database}",
       "DB_INTRANET_USERNAME=${mysql_intranet_user}",
       "DB_INTRANET_PASSWORD=${mysql_intranet_password}",
-    ],
+  ], $environment)
+
+  ::docker::run { 'intranet':
+    image   => "vision.fraunhofer.de/intranet:${intranet_tag}",
+    env     => $docker_environment,
     ports   => [ "${port}:80" ],
     volumes => $docker_volumes
   }
