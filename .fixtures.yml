@@ -8,7 +8,7 @@ fixtures:
       ref: "7.0.0"
       repo: "https://github.com/puppetlabs/puppetlabs-mysql"
     docker:
-      ref: "3.3.0"
+      ref: "3.5.0"
       repo: "https://github.com/puppetlabs/puppetlabs-docker"
     apt:
       ref: "5.0.1"
