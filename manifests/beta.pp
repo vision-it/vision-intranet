@@ -26,7 +26,7 @@ class vision_intranet::beta (
 ) {
 
   contain vision_intranet::config_beta
-  contain vision_intranet::database
+  contain vision_intranet::database_beta
   contain vision_intranet::docker_beta
 
 }
