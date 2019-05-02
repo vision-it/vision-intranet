@@ -38,10 +38,10 @@ class vision_intranet::docker_beta (
   }
 
   $docker_environment = concat([
-      "DB_INTRANET_HOST=${::fqdn}",
-      "DB_INTRANET_DATABASE=${mysql_intranet_database}",
-      "DB_INTRANET_USERNAME=${mysql_intranet_user}",
-      "DB_INTRANET_PASSWORD=${mysql_intranet_password}",
+      "DB_HOST=${::fqdn}",
+      "DB_DATABASE=${mysql_intranet_database}",
+      "DB_USERNAME=${mysql_intranet_user}",
+      "DB_PASSWORD=${mysql_intranet_password}",
   ], $environment)
 
   ::docker::run { 'intranet-laravel-5':
