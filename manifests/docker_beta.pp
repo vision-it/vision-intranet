@@ -13,12 +13,12 @@
 
 class vision_intranet::docker_beta (
 
-  String $mysql_intranet_database   = $vision_intranet::mysql_intranet_database,
-  String $mysql_intranet_user       = $vision_intranet::mysql_intranet_user,
-  String $mysql_intranet_password   = $vision_intranet::mysql_intranet_password,
-  Array[String] $docker_volumes     = $vision_intranet::docker_volumes,
-  Array[String] $environment        = $vision_intranet::environment,
-  Integer $port                     = $vision_intranet::port,
+  String $mysql_intranet_database   = $vision_intranet::beta::mysql_intranet_database,
+  String $mysql_intranet_user       = $vision_intranet::beta::mysql_intranet_user,
+  String $mysql_intranet_password   = $vision_intranet::beta::mysql_intranet_password,
+  Array[String] $docker_volumes     = $vision_intranet::beta::docker_volumes,
+  Array[String] $environment        = $vision_intranet::beta::environment,
+  Integer $port                     = $vision_intranet::beta::port,
 
 ) {
 
