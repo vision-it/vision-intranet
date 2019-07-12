@@ -24,15 +24,15 @@ class vision_intranet::docker_beta (
 
   contain ::vision_docker
 
-  if ($facts['intranet_5_tag'] == undef) {
+  if ($facts['intranet_tag'] == undef) {
     $intranet_tag = 'latest'
     } else {
-      $intranet_tag = $facts['intranet_5_tag']
+      $intranet_tag = $facts['intranet_tag']
   }
 
-  ::docker::image { 'intranet-laravel-5':
+  ::docker::image { 'intranet':
     ensure    => present,
-    image     => 'vision.fraunhofer.de/intranet-laravel-5',
+    image     => 'registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet',
     image_tag => $intranet_tag,
     require   => Class['vision_docker']
   }
@@ -44,8 +44,8 @@ class vision_intranet::docker_beta (
       "DB_PASSWORD=${mysql_intranet_password}",
   ], $environment)
 
-  ::docker::run { 'intranet-laravel-5':
-    image   => "vision.fraunhofer.de/intranet-laravel-5:${intranet_tag}",
+  ::docker::run { 'intranet':
+    image   => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
     env     => $docker_environment,
     ports   => [ "${port}:80" ],
     volumes => $docker_volumes
