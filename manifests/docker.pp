@@ -32,20 +32,20 @@ class vision_intranet::docker (
 
   ::docker::image { 'intranet':
     ensure    => present,
-    image     => 'vision.fraunhofer.de/intranet',
+    image     => 'registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet',
     image_tag => $intranet_tag,
     require   => Class['vision_docker']
   }
 
   $docker_environment = concat([
-      "DB_INTRANET_HOST=${::fqdn}",
-      "DB_INTRANET_DATABASE=${mysql_intranet_database}",
-      "DB_INTRANET_USERNAME=${mysql_intranet_user}",
-      "DB_INTRANET_PASSWORD=${mysql_intranet_password}",
+      "DB_HOST=${::fqdn}",
+      "DB_DATABASE=${mysql_intranet_database}",
+      "DB_USERNAME=${mysql_intranet_user}",
+      "DB_PASSWORD=${mysql_intranet_password}",
   ], $environment)
 
   ::docker::run { 'intranet':
-    image   => "vision.fraunhofer.de/intranet:${intranet_tag}",
+    image   => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
     env     => $docker_environment,
     ports   => [ "${port}:80" ],
     volumes => $docker_volumes
