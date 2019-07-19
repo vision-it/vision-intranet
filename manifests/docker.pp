@@ -47,7 +47,7 @@ class vision_intranet::docker (
   ::docker::run { 'intranet':
     image   => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
     env     => $docker_environment,
-    ports   => [ "${port}:80" ],
+    ports   => [ "${port}:8080" ],
     volumes => $docker_volumes
   }
 
