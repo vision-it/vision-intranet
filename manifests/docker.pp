@@ -44,10 +44,24 @@ class vision_intranet::docker (
       "DB_PASSWORD=${mysql_intranet_password}",
   ], $environment)
 
+  $docker_queue_environment = concat([
+      'CONTAINER_ROLE=queue',
+      "DB_HOST=${::fqdn}",
+      "DB_DATABASE=${mysql_intranet_database}",
+      "DB_USERNAME=${mysql_intranet_user}",
+      "DB_PASSWORD=${mysql_intranet_password}",
+  ], $environment)
+
   ::docker::run { 'intranet':
     image   => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
     env     => $docker_environment,
     ports   => [ "${port}:8080" ],
+    volumes => $docker_volumes
+  }
+
+  ::docker::run { 'intranet-queue':
+    image   => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
+    env     => $docker_queue_environment,
     volumes => $docker_volumes
   }
 
