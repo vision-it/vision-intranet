@@ -5,7 +5,7 @@ describe 'vision_intranet' do
     it 'idempotentlies run' do
       pp = <<-FILE
 
-        file { '/vision':
+        file { ['/vision', '/vision/data/', '/vision/data/swarm']:
           ensure => directory,
         }
         group { 'docker':
@@ -20,10 +20,15 @@ describe 'vision_intranet' do
           content => 'case "$1" in *) exit 0 ;; esac'
         }}
 
-        # Mocking
-        class vision_intranet::docker () {}
+        # mock classes
         class vision_intranet::database () {}
-        class vision_docker () {}
+        class vision_docker::swarm () {}
+        class vision_mysql::mariadb () {}
+        class vision_gluster::node () {}
+
+        group { 'jenkins':
+          ensure => present,
+        }
 
         class { 'vision_intranet': }
       FILE
@@ -34,7 +39,7 @@ describe 'vision_intranet' do
   end
 
   context 'files provisioned' do
-    describe file('/opt/intranet/storage') do
+    describe file('/vision/data/intranet/storage') do
       it { is_expected.to be_directory }
       it { is_expected.to be_owned_by 'www-data' }
     end
@@ -46,13 +51,28 @@ describe 'vision_intranet' do
       its(:content) { is_expected.to match 'intranet' }
       its(:content) { is_expected.to match 'rsync' }
     end
+
+    describe file('/vision/data/swarm/intranet.yaml') do
+      it { is_expected.to be_file }
+      it { is_expected.to contain 'managed by Puppet' }
+      it { is_expected.to contain 'image: registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:latest' }
+      it { is_expected.to contain '/vision/data/intranet/storage/app:/var/www/html/storage/app' }
+      it { is_expected.to contain 'intranet' }
+      it { is_expected.to contain 'intranet-queue' }
+      it { is_expected.to contain 'DB_SOCK=/var/run/mysqld/mysqld.sock' }
+      it { is_expected.to contain 'DB_DATABASE=intranet' }
+      it { is_expected.to contain 'DB_USERNAME=userint' }
+      it { is_expected.to contain 'DB_PASSWORD=foobar' }
+      it { is_expected.to contain 'FOO=BAR' }
+    end
   end
 
   context 'Jenkins user and service' do
-    describe user('jenkins') do
-      it { is_expected.to exist }
-      it { is_expected.to have_uid 50_000 }
-    end
+    # disabled; see comment in config.pp
+    # describe user('jenkins') do
+    #   it { is_expected.to exist }
+    #   it { is_expected.to have_uid 50_000 }
+    # end
 
     describe file('/etc/systemd/system/intranet_tag.service') do
       it { is_expected.to be_file }

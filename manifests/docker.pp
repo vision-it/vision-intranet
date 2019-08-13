@@ -16,29 +16,25 @@ class vision_intranet::docker (
   String $mysql_intranet_database   = $vision_intranet::mysql_intranet_database,
   String $mysql_intranet_user       = $vision_intranet::mysql_intranet_user,
   String $mysql_intranet_password   = $vision_intranet::mysql_intranet_password,
-  Array[String] $docker_volumes     = $vision_intranet::docker_volumes,
   Array[String] $environment        = $vision_intranet::environment,
-  Integer $port                     = $vision_intranet::port,
 
 ) {
 
-  contain ::vision_docker
+  $docker_volumes = [
+    '/var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock',
+    '/vision/data/intranet/storage/logs:/var/www/html/storage/logs',
+    '/vision/data/intranet/storage/framework:/var/www/html/storage/framework',
+    '/vision/data/intranet/storage/app:/var/www/html/storage/app',
+  ]
 
   if ($facts['intranet_tag'] == undef) {
     $intranet_tag = 'latest'
-    } else {
-      $intranet_tag = $facts['intranet_tag']
-  }
-
-  ::docker::image { 'intranet':
-    ensure    => present,
-    image     => 'registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet',
-    image_tag => $intranet_tag,
-    require   => Class['vision_docker']
+  } else {
+    $intranet_tag = $facts['intranet_tag']
   }
 
   $docker_environment = concat([
-      "DB_HOST=${::fqdn}",
+      'DB_SOCK=/var/run/mysqld/mysqld.sock',
       "DB_DATABASE=${mysql_intranet_database}",
       "DB_USERNAME=${mysql_intranet_user}",
       "DB_PASSWORD=${mysql_intranet_password}",
@@ -46,23 +42,38 @@ class vision_intranet::docker (
 
   $docker_queue_environment = concat([
       'CONTAINER_ROLE=queue',
-      "DB_HOST=${::fqdn}",
+      'DB_SOCK=/var/run/mysqld/mysqld.sock',
       "DB_DATABASE=${mysql_intranet_database}",
       "DB_USERNAME=${mysql_intranet_user}",
       "DB_PASSWORD=${mysql_intranet_password}",
   ], $environment)
 
-  ::docker::run { 'intranet':
-    image   => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
-    env     => $docker_environment,
-    ports   => [ "${port}:8080" ],
-    volumes => $docker_volumes
+  $compose = {
+    'version' => '3.7',
+    'services' => {
+      'intranet' => {
+        'image'       => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
+        'volumes'     => $docker_volumes,
+        'environment' => $docker_environment,
+        'deploy' => {
+          'labels' => [
+            'traefik.port=8080',
+            'traefik.frontend.rule=Host:intranet.vision.fraunhofer.de',
+            'traefik.enable=true',
+          ],
+        },
+      },
+      'intranet-queue' => {
+        'image'       => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
+        'volumes'     => $docker_volumes,
+        'environment' => $docker_queue_environment,
+      }
+    }
   }
+  # note: application runs on port 80
 
-  ::docker::run { 'intranet-queue':
-    image   => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
-    env     => $docker_queue_environment,
-    volumes => $docker_volumes
+  vision_docker::to_compose { 'intranet':
+    compose => $compose,
   }
 
 }
