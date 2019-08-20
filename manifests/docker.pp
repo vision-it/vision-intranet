@@ -34,7 +34,7 @@ class vision_intranet::docker (
   }
 
   $docker_environment = concat([
-      'DB_SOCK=/var/run/mysqld/mysqld.sock',
+      'DB_SOCKET=/var/run/mysqld/mysqld.sock',
       "DB_DATABASE=${mysql_intranet_database}",
       "DB_USERNAME=${mysql_intranet_user}",
       "DB_PASSWORD=${mysql_intranet_password}",
@@ -42,7 +42,7 @@ class vision_intranet::docker (
 
   $docker_queue_environment = concat([
       'CONTAINER_ROLE=queue',
-      'DB_SOCK=/var/run/mysqld/mysqld.sock',
+      'DB_SOCKET=/var/run/mysqld/mysqld.sock',
       "DB_DATABASE=${mysql_intranet_database}",
       "DB_USERNAME=${mysql_intranet_user}",
       "DB_PASSWORD=${mysql_intranet_password}",
@@ -70,7 +70,7 @@ class vision_intranet::docker (
       }
     }
   }
-  # note: application runs on port 80
+  # note: application runs on port 8080
 
   vision_docker::to_compose { 'intranet':
     compose => $compose,

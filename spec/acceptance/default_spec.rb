@@ -59,7 +59,7 @@ describe 'vision_intranet' do
       it { is_expected.to contain '/vision/data/intranet/storage/app:/var/www/html/storage/app' }
       it { is_expected.to contain 'intranet' }
       it { is_expected.to contain 'intranet-queue' }
-      it { is_expected.to contain 'DB_SOCK=/var/run/mysqld/mysqld.sock' }
+      it { is_expected.to contain 'DB_SOCKET=/var/run/mysqld/mysqld.sock' }
       it { is_expected.to contain 'DB_DATABASE=intranet' }
       it { is_expected.to contain 'DB_USERNAME=userint' }
       it { is_expected.to contain 'DB_PASSWORD=foobar' }
