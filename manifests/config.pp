@@ -15,17 +15,22 @@ class vision_intranet::config (
 
 ) {
 
-  contain ::vision_jenkins::user
+# currently not supported
+# because jenkins user already in ldap
+#  contain ::vision_jenkins::user
 
   vision_shipit::inotify { 'intranet_tag':
     group   => 'jenkins',
-    require => Class['::vision_jenkins::user'],
+#    require => Class['::vision_jenkins::user'],
   }
 
   file {
     [
-      '/opt/intranet',
-      '/opt/intranet/storage'
+      '/vision/data/intranet',
+      '/vision/data/intranet/storage',
+      '/vision/data/intranet/storage/logs',
+      '/vision/data/intranet/storage/framework',
+      '/vision/data/intranet/storage/app',
     ]:
     ensure => directory,
     owner  => 'www-data',

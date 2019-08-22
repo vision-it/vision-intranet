@@ -1,18 +1,5 @@
 ---
-vision_intranet::mysql_root_password: 'foobar'
-vision_intranet::mysql_monitoring_password: 'foobar'
-vision_intranet::mysql_backup_password: 'foobar'
 vision_intranet::mysql_intranet_database: 'intranet'
 vision_intranet::mysql_intranet_user: 'userint'
 vision_intranet::mysql_intranet_password: 'foobar'
-vision_intranet::phpmyadmin_server: 'foobar'
-
-vision_intranet::docker::mysql_root_password: 'foobar'
-vision_intranet::docker::mysql_monitoring_password: 'foobar'
-vision_intranet::docker::mysql_backup_password: 'foobar'
-vision_intranet::docker::mysql_intranet_database: 'intranet'
-vision_intranet::docker::mysql_intranet_user: 'userint'
-vision_intranet::docker::mysql_intranet_password: 'foobar'
-vision_intranet::docker::docker_volumes: []
-vision_intranet::docker::environment: ["FOO=BAR"]
-vision_intranet::docker::port: 8080
+vision_intranet::environment: ["FOO=BAR"]
