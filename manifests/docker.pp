@@ -17,6 +17,7 @@ class vision_intranet::docker (
   String $mysql_intranet_user       = $vision_intranet::mysql_intranet_user,
   String $mysql_intranet_password   = $vision_intranet::mysql_intranet_password,
   Array[String] $environment        = $vision_intranet::environment,
+  String $traefik_rule              = $vision_intranet::traefik_rule,
 
 ) {
 
@@ -58,7 +59,7 @@ class vision_intranet::docker (
         'deploy' => {
           'labels' => [
             'traefik.port=8080',
-            'traefik.frontend.rule=Host:intranet.vision.fraunhofer.de',
+            "traefik.frontend.rule=${traefik_rule}",
             'traefik.enable=true',
           ],
         },

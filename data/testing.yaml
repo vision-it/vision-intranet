@@ -3,3 +3,4 @@ vision_intranet::mysql_intranet_database: 'intranet'
 vision_intranet::mysql_intranet_user: 'userint'
 vision_intranet::mysql_intranet_password: 'foobar'
 vision_intranet::environment: ["FOO=BAR"]
+vision_intranet::traefik_rule: 'Host:example.com;PathPrefixStrip:/intranet'
