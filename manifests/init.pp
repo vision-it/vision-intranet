@@ -22,7 +22,6 @@ class vision_intranet (
 ) {
 
   contain ::vision_mysql::mariadb
-  contain ::vision_gluster::node
 
   contain vision_intranet::config
   contain vision_intranet::database
