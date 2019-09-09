@@ -19,9 +19,6 @@ fixtures:
     vision_shipit:
       ref: "production"
       repo: "https://github.com/vision-it/vision-shipit"
-    vision_jenkins:
-        ref: "production"
-        repo: "https://github.com/vision-it/vision-jenkins"
     vision_docker:
       ref: "origin/production"
       repo: "https://github.com/vision-it/vision-docker"

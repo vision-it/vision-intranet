@@ -68,12 +68,11 @@ describe 'vision_intranet' do
     end
   end
 
-  context 'Jenkins user and service' do
-    # disabled; see comment in config.pp
-    # describe user('jenkins') do
-    #   it { is_expected.to exist }
-    #   it { is_expected.to have_uid 50_000 }
-    # end
+  context 'Shipit user and service' do
+    describe user('shipit') do
+      it { is_expected.to exist }
+      it { is_expected.to have_uid 50_000 }
+    end
 
     describe file('/etc/systemd/system/intranet_tag.service') do
       it { is_expected.to be_file }
