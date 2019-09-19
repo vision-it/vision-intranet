@@ -13,10 +13,10 @@ describe 'vision_intranet' do
 
       let :pre_condition do
         [
-          'class vision_intranet::webshop () {}',
           'class vision_docker::swarm () {}',
           'class vision_mysql::mariadb () {}',
           'class vision_gluster::node () {}',
+          'contain mysql::params'
         ]
       end
 
