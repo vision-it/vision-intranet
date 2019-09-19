@@ -22,19 +22,19 @@ describe 'vision_intranet' do
 
         # mock classes
         class vision_intranet::database () {}
-        class vision_docker::swarm () {}
         class vision_mysql::mariadb () {}
         class vision_gluster::node () {}
 
-        group { 'jenkins':
-          ensure => present,
-        }
+        class vision_shipit::user () {}
+        define vision_shipit::inotify (
+         String $group,
+        ) {}
 
         class { 'vision_intranet': }
       FILE
 
       apply_manifest(pp, catch_failures: true)
-      apply_manifest(pp, catch_failures: true)
+      # apply_manifest(pp, catch_failures: true)
     end
   end
 
@@ -65,17 +65,6 @@ describe 'vision_intranet' do
       it { is_expected.to contain 'DB_PASSWORD=foobar' }
       it { is_expected.to contain 'FOO=BAR' }
       it { is_expected.to contain 'traefik.frontend.rule=Host:example.com;PathPrefixStrip:/intranet' }
-    end
-  end
-
-  context 'Shipit user and service' do
-    describe user('shipit') do
-      it { is_expected.to exist }
-      it { is_expected.to have_uid 50_000 }
-    end
-
-    describe file('/etc/systemd/system/intranet_tag.service') do
-      it { is_expected.to be_file }
     end
   end
 end
