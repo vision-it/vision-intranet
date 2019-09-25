@@ -64,7 +64,8 @@ describe 'vision_intranet' do
       it { is_expected.to contain 'DB_USERNAME=userint' }
       it { is_expected.to contain 'DB_PASSWORD=foobar' }
       it { is_expected.to contain 'FOO=BAR' }
-      it { is_expected.to contain 'traefik.frontend.rule=Host:example.com;PathPrefixStrip:/intranet' }
+      it { is_expected.to contain 'traefik.http.routers.intranet.rule' }
+      it { is_expected.to contain 'Host(`example.com`) || PathPrefix(`/intranet`)' }
     end
   end
 end

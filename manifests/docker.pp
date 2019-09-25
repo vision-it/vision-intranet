@@ -53,9 +53,13 @@ class vision_intranet::docker (
         'environment' => $docker_environment,
         'deploy' => {
           'labels' => [
-            'traefik.port=8080',
-            "traefik.frontend.rule=${traefik_rule}",
             'traefik.enable=true',
+            'traefik.http.services.intranet.loadbalancer.server.port=8080',
+            "traefik.http.routers.intranet.rule=${traefik_rule}",
+            'traefik.http.routers.intranet.entrypoints=https',
+            'traefik.http.routers.intranet.tls=true',
+            'traefik.http.routers.intranet.middlewares=strip-intranet@docker',
+            'traefik.http.middlewares.strip-intranet.stripprefix.prefixes=/intranet',
           ],
         },
       },
