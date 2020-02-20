@@ -18,6 +18,7 @@ class vision_intranet::docker (
   String $mysql_intranet_password   = $vision_intranet::mysql_intranet_password,
   Array[String] $environment        = $vision_intranet::environment,
   String $traefik_rule              = $vision_intranet::traefik_rule,
+  String $intranet_tag              = $vision_intranet::intranet_tag,
 
 ) {
 
@@ -27,12 +28,6 @@ class vision_intranet::docker (
     '/vision/data/intranet/storage/framework:/var/www/html/storage/framework',
     '/vision/data/intranet/storage/app:/var/www/html/storage/app',
   ]
-
-  if ($facts['intranet_tag'] == undef) {
-    $intranet_tag = 'latest'
-  } else {
-    $intranet_tag = $facts['intranet_tag']
-  }
 
   $docker_environment = concat([
       'DB_SOCKET=/var/run/mysqld/mysqld.sock',

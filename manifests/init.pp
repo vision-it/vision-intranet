@@ -18,6 +18,7 @@ class vision_intranet (
   String $mysql_intranet_password,
   Array[String] $environment = [],
   String $traefik_rule = 'Host:intranet.vision.fraunhofer.de',
+  String $intranet_tag = $facts['intranet_tag'],
 
 ) {
 
