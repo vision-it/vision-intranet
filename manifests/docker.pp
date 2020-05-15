@@ -22,6 +22,12 @@ class vision_intranet::docker (
 
 ) {
 
+  ::docker::image { 'intranet':
+    ensure       => present,
+    image        => 'registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet',
+    image_digest => $intranet_digest,
+  }
+
   $docker_volumes = [
     '/var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock',
     '/vision/data/intranet/storage/logs:/var/www/html/storage/logs',
