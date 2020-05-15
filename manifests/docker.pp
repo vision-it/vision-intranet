@@ -18,9 +18,15 @@ class vision_intranet::docker (
   String $mysql_intranet_password   = $vision_intranet::mysql_intranet_password,
   Array[String] $environment        = $vision_intranet::environment,
   String $traefik_rule              = $vision_intranet::traefik_rule,
-  String $intranet_tag              = $vision_intranet::intranet_tag,
+  String $intranet_digest           = $vision_intranet::intranet_tag,
 
 ) {
+
+  ::docker::image { 'intranet':
+    ensure       => present,
+    image        => 'registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet',
+    image_digest => $intranet_digest,
+  }
 
   $docker_volumes = [
     '/var/run/mysqld/mysqld.sock:/var/run/mysqld/mysqld.sock',
@@ -48,7 +54,7 @@ class vision_intranet::docker (
     'version' => '3.7',
     'services' => {
       'intranet' => {
-        'image'       => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
+        'image'       => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet@${intranet_digest}",
         'volumes'     => $docker_volumes,
         'environment' => $docker_environment,
         'deploy' => {
@@ -64,7 +70,7 @@ class vision_intranet::docker (
         },
       },
       'intranet-queue' => {
-        'image'       => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:${intranet_tag}",
+        'image'       => "registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet@${intranet_digest}",
         'volumes'     => $docker_volumes,
         'environment' => $docker_queue_environment,
       }

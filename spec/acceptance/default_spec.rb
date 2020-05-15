@@ -12,6 +12,12 @@ describe 'vision_intranet' do
           ensure => present,
         }
 
+        file { '/usr/bin/docker':
+          ensure => file,
+          content => file('vision_intranet/testing/docker-dummy'),
+          mode   => '0755',
+        }
+
         # Just so that Puppet won't throw an error
        if($facts[os][distro][codename] != 'jessie') {
         file {['/etc/init.d/intranet_tag']:
@@ -55,7 +61,7 @@ describe 'vision_intranet' do
     describe file('/vision/data/swarm/intranet.yaml') do
       it { is_expected.to be_file }
       it { is_expected.to contain 'managed by Puppet' }
-      it { is_expected.to contain 'image: registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet:latest' }
+      it { is_expected.to contain 'image: registry.gitlab.cc-asp.fraunhofer.de:4567/vision-it/application/intranet@latest' }
       it { is_expected.to contain '/vision/data/intranet/storage/app:/var/www/html/storage/app' }
       it { is_expected.to contain 'intranet' }
       it { is_expected.to contain 'intranet-queue' }
