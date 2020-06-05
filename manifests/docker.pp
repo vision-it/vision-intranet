@@ -61,6 +61,9 @@ class vision_intranet::docker (
           'labels' => [
             'traefik.enable=true',
             'traefik.http.services.intranet.loadbalancer.server.port=8080',
+            'traefik.http.services.intranet.loadbalancer.sticky=true',
+            'traefik.http.services.intranet.loadbalancer.sticky.cookie.secure=true',
+            'traefik.http.services.intranet.loadbalancer.sticky.cookie.httpOnly=true',
             "traefik.http.routers.intranet.rule=${traefik_rule}",
             'traefik.http.routers.intranet.entrypoints=https',
             'traefik.http.routers.intranet.tls=true',
