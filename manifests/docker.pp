@@ -16,6 +16,7 @@ class vision_intranet::docker (
   String $mysql_intranet_database   = $vision_intranet::mysql_intranet_database,
   String $mysql_intranet_user       = $vision_intranet::mysql_intranet_user,
   String $mysql_intranet_password   = $vision_intranet::mysql_intranet_password,
+  String $redis_intranet_host       = $vision_intranet::redis_intranet_host,
   Array[String] $environment        = $vision_intranet::environment,
   String $traefik_rule              = $vision_intranet::traefik_rule,
   String $intranet_digest           = $vision_intranet::intranet_tag,
@@ -40,6 +41,7 @@ class vision_intranet::docker (
       "DB_DATABASE=${mysql_intranet_database}",
       "DB_USERNAME=${mysql_intranet_user}",
       "DB_PASSWORD=${mysql_intranet_password}",
+      "REDIS_HOST=${redis_intranet_host}",
   ], $environment)
 
   $docker_queue_environment = concat([
