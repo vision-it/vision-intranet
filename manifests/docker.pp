@@ -50,6 +50,7 @@ class vision_intranet::docker (
       "DB_DATABASE=${mysql_intranet_database}",
       "DB_USERNAME=${mysql_intranet_user}",
       "DB_PASSWORD=${mysql_intranet_password}",
+      "REDIS_HOST=${redis_intranet_host}",
   ], $environment)
 
   $compose = {
