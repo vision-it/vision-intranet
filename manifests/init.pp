@@ -23,10 +23,10 @@ class vision_intranet (
 
 ) {
 
-  contain ::vision_mysql::mariadb
+  # contain ::vision_mysql::mariadb
 
   contain vision_intranet::config
-  contain vision_intranet::database
+  # contain vision_intranet::database
   contain vision_intranet::docker
 
 }
